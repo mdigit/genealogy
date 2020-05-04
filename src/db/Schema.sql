@@ -1,11 +1,11 @@
 -- Table DbVersions
 CREATE TABLE dbo.DbVersions (
     DbVersionId int NOT NULL IDENTITY(1,1),
-    Version int NOT NULL,
-    DateTime datetime NOT NULL
+    [Version] int NOT NULL,
+    [DateTime] datetime NOT NULL
 );
 ALTER TABLE dbo.DbVersions
-    ADD CONSTRAINT PK_DbVersion PRIMARY KEY (PersonId);
+    ADD CONSTRAINT PK_DbVersion PRIMARY KEY (DbVersionId);
     
 -- Table Persons
 CREATE TABLE dbo.Persons (
@@ -54,8 +54,8 @@ ALTER TABLE dbo.Children
     FOREIGN KEY (ParentId) REFERENCES dbo.Parents(ParentId);
 
 DECLARE @dbVersion int = 1;
-INSERT INTO dbo.Verson
-    (Version, DateTime)
-    VALUES (dbVersion, GETDATE());
+INSERT INTO dbo.DbVersions
+    ([Version], [DateTime])
+    VALUES (@dbVersion, GETDATE());
 
 PRINT CONCAT('!Info Database version set to ', @dbVersion)
