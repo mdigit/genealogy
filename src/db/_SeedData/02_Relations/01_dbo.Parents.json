@@ -1,0 +1,27 @@
+[
+    {
+        "ParentId":  "1",
+        "PersonId":  "1",
+        "PartnerPersonId":  "2"
+    },
+    {
+        "ParentId":  "2",
+        "PersonId":  "3",
+        "PartnerPersonId":  "4"
+    },
+    {
+        "ParentId":  "3",
+        "PersonId":  "7",
+        "PartnerPersonId":  "8"
+    },
+    {
+        "ParentId":  "4",
+        "PersonId":  "9",
+        "PartnerPersonId":  "10"
+    },
+    {
+        "ParentId":  "5",
+        "PersonId":  "9",
+        "PartnerPersonId":  "11"
+    }
+]
