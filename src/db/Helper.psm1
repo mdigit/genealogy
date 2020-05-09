@@ -40,7 +40,7 @@ function Get-SqlScript {
         $SetIdentityInsert
     )
 
-    $sqlScript = "DELETE $TableName;`r`n"
+    $sqlScript = "-- Populate '$TableName'`r`n--------------------`r`n"
     [System.Collections.ArrayList]$lines = @()
 
     $csvData = Get-Content -Path $Path -Encoding $Encoding
@@ -65,5 +65,5 @@ function Get-SqlScript {
         }
     }
 
-    return $sqlScript
+    return $sqlScript + "`r`n"
 }

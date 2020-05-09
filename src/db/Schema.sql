@@ -41,8 +41,8 @@ ALTER TABLE dbo.Parents
 -- Table Children
 CREATE TABLE dbo.Children (
     ChildId int NOT NULL IDENTITY(1,1),
-    PersonId int NOT NULL,
-    ParentId int NOT NULL
+    ParentId int NOT NULL,
+    PersonId int NOT NULL
 );
 ALTER TABLE dbo.Children
     ADD CONSTRAINT PK_Child PRIMARY KEY (ChildId);

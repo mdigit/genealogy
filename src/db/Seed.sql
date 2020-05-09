@@ -1,4 +1,11 @@
-﻿DELETE dbo.Persons;
+﻿-- Delete table data in reverse order
+--------------------
+DELETE dbo.Children;
+DELETE dbo.Parents;
+DELETE dbo.Persons;
+
+-- Populate 'dbo.Persons'
+--------------------
 SET IDENTITY_INSERT dbo.Persons ON;
 INSERT INTO dbo.Persons (PersonId,LastName,FirstName,Sex,DateOfBirth,DateOfDeath,Hometown,PlaceOfBirth,PlaceOfResidence,Profession) VALUES
 	(1,'Durscher','Jakob','male','1964-10-02',null,'Glarus Süd','Burgdorf BE','Oberstammheim','Metzger'),
@@ -17,4 +24,31 @@ INSERT INTO dbo.Persons (PersonId,LastName,FirstName,Sex,DateOfBirth,DateOfDeath
 	(14,'Durscher','Renato','male','1990-11-07',null,'Glarus Süd','Zürich','Aargau','Fahrradmechaniker'),
 	(15,'Durscher','Romano','male','1990-11-07',null,'Glarus Süd','Zürich','Aargau','Automechaniker')
 SET IDENTITY_INSERT dbo.Persons OFF;
+
+-- Populate 'dbo.Parents'
+--------------------
+SET IDENTITY_INSERT dbo.Parents ON;
+INSERT INTO dbo.Parents (ParentId,PersonId,PartnerPersonId) VALUES
+	(1,1,2),
+	(2,3,4),
+	(3,7,8),
+	(4,9,10),
+	(5,9,11)
+SET IDENTITY_INSERT dbo.Parents OFF;
+
+-- Populate 'dbo.Children'
+--------------------
+SET IDENTITY_INSERT dbo.Children ON;
+INSERT INTO dbo.Children (ChildId,ParentId,PersonId) VALUES
+	(1,1,3),
+	(2,1,7),
+	(3,1,9),
+	(4,2,5),
+	(5,2,6),
+	(6,3,14),
+	(7,3,15),
+	(8,4,12),
+	(9,5,13)
+SET IDENTITY_INSERT dbo.Children OFF;
+
 
