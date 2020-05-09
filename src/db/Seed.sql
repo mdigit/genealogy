@@ -15,6 +15,6 @@ INSERT INTO dbo.Persons (PersonId,LastName,FirstName,Sex,DateOfBirth,DateOfDeath
 	(12,'Durscher','David','male','1990-06-01',null,'Glarus Süd','Frauenfeld','Winterthur','Gastronom'),
 	(13,'Suh','Anqi','female','1990-01-01',null,'Shanghai','Shanghai','Oberengstringen ZH','Studentin'),
 	(14,'Durscher','Renato','male','1990-11-07',null,'Glarus Süd','Zürich','Aargau','Fahrradmechaniker'),
-	(15,'Durscher','Romano','male','1990-11-07',null,'Glarus Süd','Zürich','Aargau','Automechaniker');
+	(15,'Durscher','Romano','male','1990-11-07',null,'Glarus Süd','Zürich','Aargau','Automechaniker')
 SET IDENTITY_INSERT dbo.Persons OFF;
 
