@@ -1,6 +1,6 @@
 -- Children
 select 
-		concat(childPerson.FirstName, ' ', childPerson.LastName) as [Child],
+		concat(childPerson.FirstName, ' ', childPerson.MiddleNames, ' ', childPerson.LastName) as [Child],
 		concat(parentPerson.FirstName, ' ', parentPerson.LastName) as [Parent],
 		concat(parentPartnerPerson.FirstName, ' ', parentPartnerPerson.LastName) as [Partner]
 	from
