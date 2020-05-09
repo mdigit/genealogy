@@ -11,6 +11,7 @@ ALTER TABLE dbo.DbVersions
 CREATE TABLE dbo.Persons (
     PersonId int NOT NULL IDENTITY(1,1),
     LastName varchar(255) NOT NULL,
+    MiddleNames varchar(1024) NULL,
     FirstName varchar(255) NOT NULL,
     Sex varchar(255) NOT NULL,
     DateOfBirth datetime NOT NULL,
