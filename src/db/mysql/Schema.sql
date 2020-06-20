@@ -1,62 +1,61 @@
+USE test;
+DROP TABLE IF EXISTS DbVersions;
+DROP TABLE IF EXISTS Children;
+DROP TABLE IF EXISTS Parents;
+DROP TABLE IF EXISTS Persons;
+
 -- Table DbVersions
-CREATE TABLE dbo.DbVersions (
-    DbVersionId int NOT NULL IDENTITY(1,1),
-    [Version] int NOT NULL,
-    [DateTime] datetime NOT NULL
+CREATE TABLE DbVersions (
+    DbVersionId INT(6) AUTO_INCREMENT PRIMARY KEY,
+    DbVersion INT(6) NOT NULL,
+    DbDateTime DATETIME NOT NULL
 );
-ALTER TABLE dbo.DbVersions
-    ADD CONSTRAINT PK_DbVersion PRIMARY KEY (DbVersionId);
     
 -- Table Persons
-CREATE TABLE dbo.Persons (
-    PersonId int NOT NULL IDENTITY(1,1),
-    LastName varchar(255) NOT NULL,
-    MiddleNames varchar(1024) NULL,
-    FirstName varchar(255) NOT NULL,
-    Sex varchar(255) NOT NULL,
-    DateOfBirth datetime NOT NULL,
-    DateOfDeath datetime NULL,
-    Hometown varchar(256) NULL,
-    PlaceOfBirth varchar(1024) NULL,
-    PlaceOfResidence varchar(1024) NULL,
-    Profession varchar(256) NULL
+CREATE TABLE Persons (
+    PersonId INT(6) AUTO_INCREMENT PRIMARY KEY,
+    LastName VARCHAR(255) NOT NULL,
+    MiddleNames VARCHAR(1024) NULL,
+    FirstName VARCHAR(255) NOT NULL,
+    Sex VARCHAR(255) NOT NULL,
+    DateOfBirth DATE NOT NULL,
+    DateOfDeath DATE NULL,
+    Hometown VARCHAR(256) NULL,
+    PlaceOfBirth VARCHAR(1024) NULL,
+    PlaceOfResidence VARCHAR(1024) NULL,
+    Profession VARCHAR(256) NULL
 );
-ALTER TABLE dbo.Persons
-    ADD CONSTRAINT PK_Person PRIMARY KEY (PersonId);
 
 -- Table Parents
-CREATE TABLE dbo.Parents (
-    ParentId int NOT NULL IDENTITY(1,1),
-    PersonId int NOT NULL,
-    PartnerPersonId int NOT NULL
+CREATE TABLE Parents (
+    ParentId INT(6) AUTO_INCREMENT PRIMARY KEY,
+    PersonId INT(6) NOT NULL,
+    PartnerPersonId INT(6) NOT NULL
 );
-ALTER TABLE dbo.Parents
-    ADD CONSTRAINT PK_Parent PRIMARY KEY (ParentId);
-ALTER TABLE dbo.Parents
+ALTER TABLE Parents
     ADD CONSTRAINT FK_ParentPerson_PersonId
-    FOREIGN KEY (PersonId) REFERENCES dbo.Persons(PersonID);
-ALTER TABLE dbo.Parents
+    FOREIGN KEY (PersonId) REFERENCES Persons(PersonId);
+ALTER TABLE Parents
     ADD CONSTRAINT FK_ParentPerson_PartnerPersonId
-    FOREIGN KEY (PartnerPersonId) REFERENCES dbo.Persons(PersonID);
+    FOREIGN KEY (PartnerPersonId) REFERENCES Persons(PersonId);
 
 -- Table Children
-CREATE TABLE dbo.Children (
-    ChildId int NOT NULL IDENTITY(1,1),
-    ParentId int NOT NULL,
-    PersonId int NOT NULL
+CREATE TABLE Children (
+    ChildId INT(6) AUTO_INCREMENT PRIMARY KEY,
+    ParentId INT(6) NOT NULL,
+    PersonId INT(6) NOT NULL
 );
-ALTER TABLE dbo.Children
-    ADD CONSTRAINT PK_Child PRIMARY KEY (ChildId);
-ALTER TABLE dbo.Children
+ALTER TABLE Children
     ADD CONSTRAINT FK_ChildPerson_PersonId
-    FOREIGN KEY (PersonId) REFERENCES dbo.Persons(PersonId);
-ALTER TABLE dbo.Children
+    FOREIGN KEY (PersonId) REFERENCES Persons(PersonId);
+ALTER TABLE Children
     ADD CONSTRAINT FK_ChildParent_ParentId
-    FOREIGN KEY (ParentId) REFERENCES dbo.Parents(ParentId);
+    FOREIGN KEY (ParentId) REFERENCES Parents(ParentId);
 
-DECLARE @dbVersion int = 1;
-INSERT INTO dbo.DbVersions
-    ([Version], [DateTime])
-    VALUES (@dbVersion, GETDATE());
+SELECT @dbVersion;
+SET @dbVersion = 1;
+INSERT INTO DbVersions
+    (DbVersion, DbDateTime)
+    VALUES (@dbVersion, NOW());
 
-PRINT CONCAT('!Info Database version set to ', @dbVersion)
+SELECT CONCAT('!Info Database version set to ', @dbVersion)

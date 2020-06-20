@@ -12,7 +12,7 @@ Path to the CSV file containing the data to insert.
 The encoding of the input file.
 
 .PARAMETER TableName
-Table name for the insert statements. Include schema name e.g. "schema.Table".
+Table name for the insert statements. Include schema name e.g. "[schema.]Table".
 
 .PARAMETER SetIdentityInsert
 Value indicating whether to set identity insert or not.
@@ -40,30 +40,43 @@ function Get-SqlScript {
         $SetIdentityInsert
     )
 
-    $sqlScript = "-- Populate '$TableName'`r`n--------------------`r`n"
+    # Remove schema part e.g. "dbo."
+    $TableName = $TableName -replace "\w*\."
+
+    $sqlScript = "/* Populate '$TableName' */`r`n"
     [System.Collections.ArrayList]$lines = @()
 
     $csvData = Get-Content -Path $Path -Encoding $Encoding
-    $columnNames =  $csvData[0] -join ","
+    $columnNames = $csvData[0] -join ","
 
     $csvData | Select-Object -Skip 1 | ForEach-Object {
         $lines.Add("`t($($_ -join ","))") > $null
     }
 
     If ($lines.Length -gt 0) {
-        If ( $SetIdentityInsert ) {
-            $sqlScript += "SET IDENTITY_INSERT $TableName ON;`r`n"
-        }
-
         $sqlScript += "INSERT INTO $TableName ($columnNames) VALUES`r`n"
 
         $sqlScript += $lines -join ",`r`n"
-        $sqlScript += "`r`n"
-
-        If ( $SetIdentityInsert ) {
-            $sqlScript += "SET IDENTITY_INSERT $TableName OFF;`r`n"
-        }
+        $sqlScript += ";`r`n"
     }
 
     return $sqlScript + "`r`n"
+}
+
+<#
+.SYNOPSIS
+Gets a SQL single line comment.
+
+.PARAMETER Placeholder
+Placeholder to decorate.
+#>
+function Get-SqlSingleLineComment {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory)]
+        [String]
+        $Placeholder
+    )
+
+    return "/* $Placeholder */`r`n"
 }

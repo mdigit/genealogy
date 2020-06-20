@@ -2,10 +2,10 @@
 Import-Module "./Helper.psm1"
 
 # Delete seed data in reverse order
-$sql += "-- Delete table data in reverse order`r`n--------------------`r`n"
+$sql += Get-SqlSingleLineComment -Placeholder "Delete table data in reverse order"
 Get-ChildItem "./_SeedData" -Recurse -Filter "*.csv" | Sort-Object -Property FullName -Descending | ForEach-Object {
     $tableName = $_.Basename -replace "\d*_",""
-    $sql += "DELETE $TableName;`r`n"
+    $sql += "DELETE FROM $TableName;`r`n"
 }
 $sql += "`r`n"
 
